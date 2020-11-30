@@ -1,268 +1,272 @@
 #include <iostream>
-#include <time.h>
-#include <cstring>
-#include <string>
 #include <locale.h>
-#include <Windows.h>
+#include <string>
+
 using namespace std;
-class People {
-protected:
 
-	string name;
-	int rost;
-
-public:
-
-	People() {
-		this->rost = 0;
-		this->name = "-";
-	}
-
-	People(int Rost, string Name) {
-		this->rost = Rost;
-		this->name = Name;
-	}
-
-	void setPeople() {
-		bool a = true;
-		cout << "Класс: People " << endl;
-		cout << "Введите имя:" << endl;
-		cin >> name;
-		do
+string string_check(string s)
+{
+	int i = 0;
+	string str;
+	while (s[i])
+	{
+		if ((int(s[i]) >= 48 && (int(s[i]) <= 57)) || ((s[i] >= 97) && (s[i] <= 122)))
+			str = str + s[i];
+		else
 		{
-			cout << "Введите рост: ";
-			cin >> rost;
-			if (cin.fail() || rost <= 0)
-				cout << "Введите ещё раз" << endl;
-			else
-				a = false;
-			cin.clear();
-			cin.ignore(cin.rdbuf()->in_avail());
-		} while (a);
-
+			cout << "Vvedeno ne chislo ili bukva, vvedite chislo ili bukvu\n";
+			cin >> s;
+			return string_check(s);
+		}
+		i++;
 	}
+	return str;
+}
 
-	~People()
-	{
-
-	}
-
-	void printPeople() {
-		cout << "Класс: People " << endl;
-		cout << "Имя: " << name << endl;
-		cout << "Рост: " << rost << endl;
-	}
-
-};
-
-
-class Player : virtual public People {
+class Kniga
+{
 protected:
-
-	int startpos; // стартовая позиция
+	string* Kniga_name;
 
 public:
-
-	Player() {
-		this->startpos = 0;
-	}
-
-	Player(int Startpos) {
-		this->startpos = Startpos;
-	}
-	void setPlayer() {
-		bool a = true;
-		cout << "Класс: Player " << endl;
-		do
-		{
-			cout << "Введите стартовую позицию: " << endl;
-			cin >> startpos;
-			if (cin.fail() || startpos <= 0 || startpos > 6)
-				cout << "Введите ещё раз" << endl;
-			else
-				a = false;
-			cin.clear();
-			cin.ignore(cin.rdbuf()->in_avail());
-		} while (a);
-	}
-
-
-	~Player()
+	Kniga()
 	{
-
+		Kniga_name = new string;
+		*Kniga_name = " ";
 	}
 
-	void printPlayer() {
-		cout << "Класс: Player " << endl;
-		cout << "Стартовая позиция: " << startpos << endl;
+	Kniga(string Knig_name)
+	{
+		Kniga_name = new string;
+		int i = 0;
+		*Kniga_name = Knig_name;
 	}
 
+	void Show()
+	{
+		cout << "Название книги-" << Kniga_name << endl;
+	}
+
+	~Kniga()
+	{
+		delete Kniga_name;
+	}
 };
 
-class reservePlayer : virtual public Player {
+class Janr : virtual public Kniga
+{
 protected:
-
-	int timeonbench; // время на скамейке
+	string* Janr_name;
 
 public:
-
-	reservePlayer() {
-		this->timeonbench = 0;
-	}
-
-	reservePlayer(int Timeonbench) {
-		this->timeonbench = Timeonbench;
-	}
-	void setreservePlayer() {
-		bool a = true;
-
-		cout << "Класс: reservePlayer " << endl;
-		do
-		{
-			cout << "Введите время на скамейке(минут): " << endl;
-			cin >> timeonbench;
-			if (cin.fail() || timeonbench <= 0)
-				cout << "Введите ещё раз" << endl;
-			else
-				a = false;
-			cin.clear();
-			cin.ignore(cin.rdbuf()->in_avail());
-		} while (a);
-	}
-
-
-	~reservePlayer()
+	Janr()
 	{
-
+		Janr_name = new string;
+		*Janr_name = " ";
 	}
 
-	void printreservePlayer() {
-		cout << "Класс: reservePlayer " << endl;
-		cout << "Время на скамейке(минут): " << timeonbench << endl;
+	Janr(string Jnar_v_name, string Kniga_name = " ")
+		: Kniga(Kniga_name)
+	{
+		Janr_name = new string;
+		*Janr_name = Jnar_v_name;
 	}
 
+	void Show()
+	{
+		cout << "Название книги :" << *Kniga_name;
+		cout << "Название жанра :" << *Janr_name << endl;
+	}
+
+	~Janr()
+	{
+		delete Janr_name;
+	}
 };
 
-
-class sudiya : virtual public People { // судья
+class Tema : public Janr
+{
 protected:
+	string* Tema_name;
 
-	string shapecolor; // цвет формы
 
 public:
-
-	sudiya() {
-		this->shapecolor = "-";
-	}
-
-	sudiya(string shapecolor) {
-		this->shapecolor = shapecolor;
-	}
-	void setSudiya() {
-		cout << "Класс: Sudiya " << endl;
-		cout << "Введите цвет формы:" << endl;
-		cin >> shapecolor;
-	}
-
-
-	~sudiya()
+	Tema()
 	{
-
+		Tema_name = new string;
+		*Tema_name = " ";
 	}
 
-	void printJudge() {
-		cout << "Класс: Sudiya " << endl;
-		cout << "Цвет формы: " << shapecolor << endl;;
+	Tema(string Tema_v_name, string Kniga_name = " ", string Janr_name = " ")
+		:Janr(Janr_name, Kniga_name)
+	{
+		Tema_name = new string;
+		*Tema_name = Tema_v_name;
 	}
 
+	void Show()
+	{
+		cout << "Книга :" << *Kniga_name;
+		cout << "Жанр :" << *Janr_name;
+		cout << "Тема :" << Tema_name << endl;
+	}
+
+	~Tema()
+	{
+		delete Tema_name;
+	}
 };
 
-class MainSudiya : virtual public sudiya { // главный судья
+class Autor : virtual public Kniga
+{
 protected:
-
-	int numbsubor; // количество подчинённых 
+	string* Autor_name;
 
 public:
-
-	MainSudiya() {
-		this->numbsubor = 0;
-	}
-
-	MainSudiya(int Numbsubor) {
-		this->numbsubor = Numbsubor;
-	}
-	void setMainJudge() {
-		bool a = true;
-
-		cout << "Класс: MainSudiya " << endl;
-		do
-		{
-			cout << "Введите количество подчинённых:" << endl;
-			cin >> numbsubor;
-			if (cin.fail() || numbsubor <= 0)
-				cout << "Введите ещё раз" << endl;
-			else
-				a = false;
-			cin.clear();
-			cin.ignore(cin.rdbuf()->in_avail());
-		} while (a);
-	}
-
-
-	~MainSudiya()
+	Autor()
 	{
-
+		Autor_name = new string;
 	}
 
-	void printMainSudiya() {
-		cout << "Класс: MainSudiya " << endl;
-		cout << "Количество подчинённых: " << numbsubor << endl;;
+	Autor(string Autor_v_name, string Kniga_name = " ")
+		: Kniga(Kniga_name)
+	{
+		Autor_name = new string;
+		int i = 0;
+		*Autor_name = Autor_v_name;
 	}
 
+	void Show()
+	{
+		cout << "Книга :" << *Kniga_name;
+		cout << "Автор :" << *Autor_name << endl;;
+	}
+
+	~Autor()
+	{
+		delete Autor_name;
+	}
 };
 
-
-
-class Volleyball : virtual public MainSudiya, virtual public reservePlayer { // волейбол
+class AJanr : public Autor
+{
 protected:
-
-	int numbplayers; // количество игроков
+	string* AJ_name;
 
 public:
-
-	Volleyball() {
-		this->numbplayers = 0;
-	}
-
-	Volleyball(int Numbplayers) {
-		this->numbplayers = Numbplayers;
-	}
-	void setVolleyball() {
-		bool a = true;
-
-		cout << "Класс: Volleyball " << endl;
-		do
-		{
-			cout << "Введите количество игроков:" << endl;
-			cin >> numbplayers;
-			if (cin.fail() || numbplayers <= 0)
-				cout << "Введите ещё раз" << endl;
-			else
-				a = false;
-			cin.clear();
-			cin.ignore(cin.rdbuf()->in_avail());
-		} while (a);
-	}
-
-
-	~Volleyball()
+	AJanr()
 	{
-
+		AJ_name = new string;
 	}
 
-	void printVolleyball() {
-		cout << "Класс: Volleyball " << endl;
-		cout << "Количество игроков: " << numbplayers << endl;;
+	AJanr(string AJanr_v_name, string Autor_name = " ",
+		string Kniga_v_name = " ")
+		:Autor(Autor_name, Kniga_v_name)
+	{
+		AJ_name = new string;
+		*AJ_name = AJanr_v_name;
+		*Kniga_name = Kniga_v_name;
 	}
 
+
+	void Show()
+	{
+		cout << "Книга :" << *Kniga_name;
+		cout << "Автор" << *Autor_name;
+		cout << " Авторский жанр" << *AJ_name << endl;
+	}
+
+	~AJanr()
+	{
+		delete AJ_name;
+	}
 };
+
+class GG : public Tema, public AJanr
+{
+protected:
+	string* GG_name;
+public:
+	GG()
+	{
+		GG_name = new string;
+		*GG_name = " ";
+	}
+
+	GG(string gg_name, string ajanr_name, string autor_name,
+		string janr_name, string kniga_name, string tema_name)
+
+		:Tema(tema_name, kniga_name, janr_name), AJanr(ajanr_name, autor_name, kniga_name)
+	{
+		*Kniga_name = kniga_name;
+
+		*Janr_name = janr_name;
+
+		*Autor_name = autor_name;
+
+		*AJ_name = ajanr_name;
+
+		*Tema_name = tema_name;
+
+		GG_name = new string;
+		*GG_name = gg_name;
+	}
+
+	void Show()
+	{
+		cout << "Название книги " << *Kniga_name << endl;
+		cout << "Жанр " << *Janr_name << endl;
+		cout << "Тема " << *Tema_name << endl;
+		cout << "Автор " << *Autor_name << endl;
+		cout << "Авторский жанр " << *AJ_name << endl;
+		cout << "Главный герой " << *GG_name << endl;
+		cout << "Главный герой " << *GG_name << endl;
+	}
+
+	~GG()
+	{
+		delete GG_name;
+	}
+};
+
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	string data;
+
+	string kniga_name, janr_name, tema_name, autor_name, ajanr_name, gg_name;
+
+	cout << "Введите название книги" << endl;
+	cin >> data;
+	kniga_name = string_check(data);
+
+	cout << "Ведите жанр" << endl;
+	cin >> data;
+	janr_name = string_check(data);
+
+
+	cout << "Введите автора" << endl;
+	cin >> data;
+	autor_name = string_check(data);
+
+
+	cout << "Введите авторский жанр" << endl;
+	cin >> data;
+	ajanr_name = string_check(data);
+
+	cout << "Введите тему" << endl;
+	cin >> data;
+	tema_name = string_check(data);
+
+
+	cout << "Введите имя главного героя" << endl;
+	cin >> data;
+	gg_name = string_check(data);
+
+
+	GG actor(gg_name, ajanr_name, autor_name,
+		janr_name, kniga_name, tema_name);
+	cout << "===============================================" << endl;
+	actor.Show();
+	return 0;
+}
