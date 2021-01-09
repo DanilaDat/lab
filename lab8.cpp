@@ -1,4 +1,4 @@
-﻿#include <filesystem>
+#include <filesystem>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -8,6 +8,8 @@
 const int lenght_buf = 30;
 using namespace std;
 class File;
+
+
 
 class Time {
 private:
@@ -24,7 +26,10 @@ public:
 	friend ostream& operator<<(ostream& out, const Time& time);
 };
 
-class Bus_flight{
+
+
+
+class ReisAvtob{
 private:
 	int m_number_Bus;
 	int m_type_Bus;
@@ -33,20 +38,24 @@ private:
 	Time m_arrival_time;
 
 public:
-	Bus_flight(int number_Bus = 0, int type_Bus = 0, string destination = "", Time departure_time = (0, 0, 0), Time arrival_time = (0, 0, 0)):
+	ReisAvtob(int number_Bus = 0, int type_Bus = 0, string destination = "", Time departure_time = (0, 0, 0), Time arrival_time = (0, 0, 0)):
 		m_number_Bus(number_Bus), m_type_Bus(type_Bus), m_destination(destination), m_departure_time(departure_time), m_arrival_time(arrival_time){}
 
-	~Bus_flight() {};
+	~ReisAvtob() {};
 
-	friend bool operator <(const Bus_flight, const Bus_flight);
-	friend bool operator >(const Bus_flight, const Bus_flight);
-	friend bool operator ==(const Bus_flight, const Bus_flight);
-	friend bool operator !=(const Bus_flight, const Bus_flight);
-	friend ostream& operator<<(ostream&, const Bus_flight&);
+	friend bool operator <(const ReisAvtob, const ReisAvtob);
+	friend bool operator >(const ReisAvtob, const ReisAvtob);
+	friend bool operator ==(const ReisAvtob, const ReisAvtob);
+	friend bool operator !=(const ReisAvtob, const ReisAvtob);
+	friend ostream& operator<<(ostream&, const ReisAvtob&);
 
 	friend Time;
 	friend File;
 };
+
+
+
+
 
 class Exception{
 private:
@@ -71,6 +80,9 @@ class Iterator;
 template <class T>
 class List;
 
+
+
+
 template <class T>
 class Node {
 private:
@@ -82,6 +94,10 @@ private:
 	friend Iterator<T>;
 	friend List<T>;
 };
+
+
+
+
 
 template <class T>
 class Iterator {
@@ -127,6 +143,10 @@ public:
 		return !(m_nodePointer == el_1.m_nodePointer);
 	}
 };
+
+
+
+
 
 template <class T>
 class List {
@@ -195,7 +215,7 @@ public:
 		RawEraseNode(target);
 	}
 
-	void bubble_sort() {
+	void sortBubl() {
 		Node<T>* ptr;
 
 		for (int i = 0; i < size; i++) {
@@ -243,6 +263,9 @@ public:
 		}
 	}
 
+
+
+
 	void print() {
 		Iterator<T> it = this->Begin();
 		while (true) {
@@ -264,6 +287,10 @@ public:
 private:
 	Node<T>* head;
 	int size;
+
+
+
+
 
 	void RawEraseNode(Node<T>* target) {
 		if (target->prev && target->next) {
@@ -290,6 +317,11 @@ private:
 	}
 };
 
+
+
+
+
+
 bool operator <(const Time type_1, const Time type_2) {
 	if (type_1.m_hour < type_2.m_hour)
 		return true;
@@ -307,27 +339,33 @@ bool operator <(const Time type_1, const Time type_2) {
 bool operator >(const Time type_1, const Time type_2) {
 	return !(type_1 < type_2);
 }
-bool operator <(const Bus_flight type_1, const Bus_flight type_2) {
+bool operator <(const ReisAvtob type_1, const ReisAvtob type_2) {
 	return type_1.m_arrival_time < type_2.m_arrival_time;
 }
-bool operator >(const Bus_flight type_1, const Bus_flight type_2) {
+bool operator >(const ReisAvtob type_1, const ReisAvtob type_2) {
 	return !(type_1 < type_2);
 }
-bool operator ==(const Bus_flight type_1, const Bus_flight type_2) {
+bool operator ==(const ReisAvtob type_1, const ReisAvtob type_2) {
 	return type_1.m_number_Bus == type_2.m_number_Bus;
 }
-bool operator !=(const Bus_flight type_1, const Bus_flight type_2) {
+bool operator !=(const ReisAvtob type_1, const ReisAvtob type_2) {
 	return !(type_2 == type_2);
 }
 
-std::ostream& operator<<(std::ostream& out, const Bus_flight& bus_flight) {
-	out << "Number_Bus: " << bus_flight.m_number_Bus << endl;
-	out << "Type_Bus: " << bus_flight.m_type_Bus << endl;
-	out << "Destination: " << bus_flight.m_destination << endl;
-	out << endl <<"Departure_time: " << bus_flight.m_departure_time << endl;
-	out << "Arrival_time: " << bus_flight.m_arrival_time << endl;
+
+
+
+std::ostream& operator<<(std::ostream& out, const ReisAvtob& reisavtob) {
+	out << "Number_Bus: " << reisavtob.m_number_Bus << endl;
+	out << "Type_Bus: " << reisavtob.m_type_Bus << endl;
+	out << "Destination: " << reisavtob.m_destination << endl;
+	out << endl <<"Departure_time: " << reisavtob.m_departure_time << endl;
+	out << "Arrival_time: " << reisavtob.m_arrival_time << endl;
 	return out;
 }
+
+
+
 
 std::ostream& operator<<(std::ostream& out, const Time& time) {
 	out << endl;
@@ -337,13 +375,16 @@ std::ostream& operator<<(std::ostream& out, const Time& time) {
 	return out;
 }
 
+
+
+
 class File {
 public:
 	File(string filePath);
 	void ReadTextFormat();
-	void WriteTextFormat(const Bus_flight&);
+	void WriteTextFormat(const ReisAvtob&);
 	void ReadBinFormat();
-	void WriteBinFormat(const Bus_flight&);
+	void WriteBinFormat(const ReisAvtob&);
 	void Alk_1_Find_flight(Time);
 	void DelByName(string name);
 	void FindByName(string name);
@@ -360,25 +401,29 @@ private:
 	string filePath;
 	fstream ioFile;
 
-	void GetElementOfBinFile(Bus_flight&);
+	void GetElementOfBinFile(ReisAvtob&);
 };
+
+
+
+
 
 int main() {
 	File file1("yeee.txt");
 	File file2("yeee1.txt");
 	File file3("yeee2.bin");
 
-	List<Bus_flight> list;
+	List<ReisAvtob> list;
 
 	Time For_Alk_1{ 20,20,0 };
 
-	list.InsertNode(Bus_flight(5, 1, "Minsk", Time(15,15,15), Time(17, 20, 55)));
-	list.InsertNode(Bus_flight(4, 2, "Brest", Time(16, 15, 15), Time(19,20,15)));
-	list.InsertNode(Bus_flight(3, 3, "Grodno", Time(15, 15, 15), Time(20, 15, 15)));
-	list.InsertNode(Bus_flight(2, 4, "Mogilev", Time(15, 15, 15), Time(19,15,15)));
-	list.InsertNode(Bus_flight(1, 5, "Gomel", Time(15,15,15), Time(21,16,15)));
+	list.InsertNode(ReisAvtob(5, 1, "Minsk", Time(15,15,15), Time(17, 20, 55)));
+	list.InsertNode(ReisAvtob(4, 2, "Brest", Time(16, 15, 15), Time(19,20,15)));
+	list.InsertNode(ReisAvtob(3, 3, "Grodno", Time(15, 15, 15), Time(20, 15, 15)));
+	list.InsertNode(ReisAvtob(2, 4, "Mogilev", Time(15, 15, 15), Time(19,15,15)));
+	list.InsertNode(ReisAvtob(1, 5, "Gomel", Time(15,15,15), Time(21,16,15)));
 
-	Iterator<Bus_flight> it = list.Begin();
+	Iterator<ReisAvtob> it = list.Begin();
 
 	while (true) {
 		if (it == list.End()) {
@@ -446,7 +491,7 @@ void File::quicksort_number_Bus(int first, int last){
 		return;
 	}
 
-	Bus_flight cur, next, mid_elem, cur_f, cur_l;
+	ReisAvtob cur, next, mid_elem, cur_f, cur_l;
 
 	int f = first, l = last;
 	int mid = (f + l) / 2;              
@@ -538,7 +583,7 @@ void File::Alk_1_Find_flight(Time time) {
 		return;
 	}
 
-	Bus_flight temp;
+	ReisAvtob temp;
 	for (int i = 0; i < fileSize; i++) {
 		GetElementOfBinFile(temp);
 		if (temp.m_arrival_time < time) {
@@ -562,7 +607,7 @@ void File::quicksort_D_time(int first, int last) {
 		return;
 	}
 
-	Bus_flight cur, next, mid_elem, cur_f, cur_l;
+	ReisAvtob cur, next, mid_elem, cur_f, cur_l;
 
 	int f = first, l = last;
 	int mid = (f + l) / 2;
@@ -652,7 +697,7 @@ void File::quicksort_A_time(int first, int last) {
 		return;
 	}
 
-	Bus_flight cur, next, mid_elem, cur_f, cur_l;
+	ReisAvtob cur, next, mid_elem, cur_f, cur_l;
 
 	int f = first, l = last;
 	int mid = (f + l) / 2;
@@ -742,7 +787,7 @@ void File::quicksort_destination(int first, int last) {
 		return;
 	}
 
-	Bus_flight cur, next, mid_elem, cur_f, cur_l;
+	ReisAvtob cur, next, mid_elem, cur_f, cur_l;
 
 	int f = first, l = last;
 	int mid = (f + l) / 2;
@@ -832,7 +877,7 @@ void File::quicksort_type_Bus(int first, int last) {
 		return;
 	}
 
-	Bus_flight cur, next, mid_elem, cur_f, cur_l;
+	ReisAvtob cur, next, mid_elem, cur_f, cur_l;
 
 	int f = first, l = last;
 	int mid = (f + l) / 2;
@@ -936,7 +981,7 @@ void File::ReadTextFormat() {
 	ioFile.close();
 }
 
-void File::WriteTextFormat(const Bus_flight& bus_flight) {
+void File::WriteTextFormat(const ReisAvtob& reisavtob) {
 	try {
 		ioFile.open(filePath, ios::out | ios::app);
 		if (!ioFile.is_open()) {
@@ -949,7 +994,7 @@ void File::WriteTextFormat(const Bus_flight& bus_flight) {
 		return;
 	}
 
-	ioFile << bus_flight;
+	ioFile << reisavtob;
 	ioFile.close();
 }
 
@@ -968,7 +1013,7 @@ void File::FindByName(string name) {
 		return;
 	}
 
-	Bus_flight temp;
+	ReisAvtob temp;
 	for (int i = 0; i < fileSize; i++) {
 		GetElementOfBinFile(temp);
 		if (strcmp(temp.m_destination.data(), name.data()) == 0) {
@@ -995,7 +1040,7 @@ void File::DelByName(string name) {
 		return;
 	}
 
-	Bus_flight cur, next;
+	ReisAvtob cur, next;
 	int curPos, nextPos;
 
 	for (int i = 0; i < fileSize; i++) {
@@ -1058,7 +1103,7 @@ void File::ReadBinFormat() {
 		return;
 	}
 
-	Bus_flight temp;
+	ReisAvtob temp;
 
 	ioFile.seekg(0, ios::end);
 	int size = ioFile.tellg();
@@ -1072,7 +1117,7 @@ void File::ReadBinFormat() {
 	ioFile.close();
 }
 
-void File::WriteBinFormat(const Bus_flight& bus_flight) {
+void File::WriteBinFormat(const ReisAvtob& reisavtob) {
 	try {
 		ioFile.open(filePath, ios::out | ios::app | ios::binary);
 		if (!ioFile.is_open()) {
@@ -1085,18 +1130,18 @@ void File::WriteBinFormat(const Bus_flight& bus_flight) {
 		return;
 	}
 
-	ioFile.write((char*)&bus_flight.m_number_Bus, sizeof(int));
-	ioFile.write((char*)&bus_flight.m_type_Bus, sizeof(int));
+	ioFile.write((char*)&reisavtob.m_number_Bus, sizeof(int));
+	ioFile.write((char*)&reisavtob.m_type_Bus, sizeof(int));
 
-	ioFile.write(bus_flight.m_destination.data(), lenght_buf);
+	ioFile.write(reisavtob.m_destination.data(), lenght_buf);
 
-	ioFile.write((char*)&bus_flight.m_departure_time, sizeof(Time));
-	ioFile.write((char*)&bus_flight.m_arrival_time, sizeof(Time));
+	ioFile.write((char*)&reisavtob.m_departure_time, sizeof(Time));
+	ioFile.write((char*)&reisavtob.m_arrival_time, sizeof(Time));
 
 	ioFile.close();
 }
 
-void File::GetElementOfBinFile(Bus_flight& temp) {
+void File::GetElementOfBinFile(ReisAvtob& temp) {
 	int lenght;
 	ioFile.read((char*)&temp.m_number_Bus, sizeof(int));
 	ioFile.read((char*)&temp.m_type_Bus, sizeof(int));
@@ -1132,7 +1177,7 @@ int File::CountElementOfBinFile() {
 	ioFile.seekg(0, ios::beg);
 
 	while (ioFile.tellg() < fileSize) {
-		Bus_flight temp;
+		ReisAvtob temp;
 		int lenght;
 		ioFile.read((char*)&temp.m_number_Bus, sizeof(int));
 		ioFile.read((char*)&temp.m_type_Bus, sizeof(int));
