@@ -13,12 +13,12 @@ class File;
 
 class Time {
 private:
-	int m_hour;
-	int m_minute;
-	int m_second;
+	int m_chas;
+	int m_min;
+	int m_sec;
 public:
-	Time(int hour = 0, int minute = 0, int second = 0):
-		m_hour(hour), m_minute(minute), m_second(second) {}
+	Time(int chas = 0, int min = 0, int sec = 0):
+		m_chas(chas), m_min(min), m_sec(sec) {}
 	~Time() {}
 
 	friend bool operator >(const Time type_1, const Time type_2);
@@ -323,13 +323,13 @@ private:
 
 
 bool operator <(const Time type_1, const Time type_2) {
-	if (type_1.m_hour < type_2.m_hour)
+	if (type_1.m_chas < type_2.m_chas)
 		return true;
-	else if (type_1.m_hour == type_2.m_hour) {
-		if (type_1.m_minute < type_2.m_minute)
+	else if (type_1.m_chas == type_2.m_chas) {
+		if (type_1.m_min < type_2.m_min)
 			return true;
-		else if (type_1.m_minute == type_2.m_minute)
-			if (type_1.m_second < type_2.m_second)
+		else if (type_1.m_min == type_2.m_min)
+			if (type_1.m_sec < type_2.m_sec)
 				return true;
 			else return false;
 		else return false;
@@ -369,9 +369,9 @@ std::ostream& operator<<(std::ostream& out, const ReisAvtob& reisavtob) {
 
 std::ostream& operator<<(std::ostream& out, const Time& time) {
 	out << endl;
-	out << "Hour: " << time.m_hour << endl;
-	out << "Minute: " << time.m_minute << endl;
-	out << "Second: " << time.m_second << endl;
+	out << "Hour: " << time.m_chas << endl;
+	out << "Minute: " << time.m_min << endl;
+	out << "Second: " << time.m_sec << endl;
 	return out;
 }
 
